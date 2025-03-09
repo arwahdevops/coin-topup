@@ -1,0 +1,47 @@
+{% extends "user/base.html" %}
+{% block title %}Riwayat Transaksi{% endblock %}
+{% block content %}
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <h1 class="text-2xl font-bold p-6 bg-gray-50">Riwayat Transaksi</h1>
+    
+    <div class="px-6 py-4">
+        {% if transactions %}
+            <div class="space-y-4">
+                {% for transaction in transactions %}
+                <div class="border rounded-lg p-4">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-bold">{{ transaction.platform }}</p>
+                            <p class="text-sm text-gray-500">
+                                {{ transaction.timestamp.strftime('%d %b %Y %H:%M') }}
+                            </p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-sm 
+                            {{ 'bg-green-100 text-green-800' if transaction.status == 'success' 
+                            else 'bg-yellow-100 text-yellow-800' if transaction.status == 'pending'
+                            else 'bg-red-100 text-red-800' }}">
+                            {{ transaction.status|upper }}
+                        </span>
+                    </div>
+                    <div class="mt-2">
+                        <p>Jumlah: 
+                            {% if transaction.jumlah_coin %}
+                                {{ transaction.jumlah_coin|number_format }} Coin
+                            {% else %}
+                                Rp {{ transaction.custom_coin|number_format }}
+                            {% endif %}
+                        </p>
+                        <p>Total: Rp {{ transaction.harga|number_format }}</p>
+                        <p class="text-sm text-gray-500 mt-2">
+                            Metode: {{ transaction.metode }}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-gray-500 text-center py-8">Belum ada transaksi</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

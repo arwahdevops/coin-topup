@@ -1,0 +1,42 @@
+{% extends "admin/base.html" %}
+{% block title %}Edit Pengguna{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow overflow-hidden max-w-2xl mx-auto">
+    <div class="p-6 bg-gray-50 border-b">
+        <h1 class="text-xl font-bold">Edit Pengguna - {{ user.name }}</h1>
+    </div>
+    
+    <form method="POST" class="p-6">
+        {{ form.hidden_tag() }}
+        
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">No HP</label>
+                {{ form.phone(class="w-full p-2 border rounded") }}
+                {% for error in form.phone.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium mb-1">Password Baru</label>
+                {{ form.password(class="w-full p-2 border rounded", placeholder="Kosongkan jika tidak diubah") }}
+                {% for error in form.password.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                {% endfor %}
+            </div>
+            
+            <div class="flex items-center">
+                {{ form.is_admin(class="h-4 w-4") }}
+                <label class="ml-2 text-sm">Admin</label>
+            </div>
+            
+            <button type="submit" 
+                    class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+                Simpan Perubahan
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

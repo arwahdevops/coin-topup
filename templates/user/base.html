@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topup App - {% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="{{ url_for('topup') }}" class="text-xl font-bold">Topup App</a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        {% if current_user.is_authenticated %}
+                            <a href="{{ url_for('topup') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Topup</a>
+                            <a href="{{ url_for('transaction_history') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">History</a>
+                        {% else %}
+                            <a href="{{ url_for('user_login') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Login</a>
+                            <a href="{{ url_for('user_register') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('topup') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Topup</a>
+                    <a href="{{ url_for('transaction_history') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">History</a>
+                    <a href="{{ url_for('logout') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('user_login') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Login</a>
+                    <a href="{{ url_for('user_register') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Register</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mb-4 p-4 rounded-lg {{ 'bg-green-100 text-green-800' if category == 'success' else 'bg-red-100 text-red-800' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        // Toggle mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

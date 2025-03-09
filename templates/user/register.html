@@ -1,0 +1,28 @@
+{% extends "user/base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow">
+    <h1 class="text-2xl font-bold mb-6">Registrasi Akun</h1>
+    <form method="POST" class="space-y-4">
+        {{ form.hidden_tag() }}
+        <div>
+            <label class="block text-gray-700 mb-2">Nama</label>
+            {{ form.name(class="w-full p-2 border rounded") }}
+        </div>
+        <div>
+            <label class="block text-gray-700 mb-2">Nomor HP</label>
+            {{ form.phone(class="w-full p-2 border rounded") }}
+        </div>
+        <div>
+            <label class="block text-gray-700 mb-2">Password</label>
+            {{ form.password(class="w-full p-2 border rounded") }}
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+            Daftar
+        </button>
+    </form>
+    <p class="mt-4 text-center">
+        Sudah punya akun? <a href="{{ url_for('user_login') }}" class="text-blue-600">Login disini</a>
+    </p>
+</div>
+{% endblock %}

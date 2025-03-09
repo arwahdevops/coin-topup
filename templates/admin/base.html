@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - {% block title %}{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="{{ url_for('admin_dashboard') }}" class="text-xl font-bold">Admin Panel</a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{{ url_for('admin_dashboard') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Dashboard</a>
+                        <a href="{{ url_for('admin_price_settings') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Harga</a>
+                        <a href="{{ url_for('admin_payment_settings') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Pembayaran</a>
+                        <a href="{{ url_for('admin_confirm_payments') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Konfirmasi</a>
+                        <a href="{{ url_for('admin_history') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Histori</a>
+                        <a href="{{ url_for('admin_users') }}" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700 transition-colors">Kelola Pengguna</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="{{ url_for('admin_dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Dashboard</a>
+                <a href="{{ url_for('admin_price_settings') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Harga</a>
+                <a href="{{ url_for('admin_payment_settings') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Pembayaran</a>
+                <a href="{{ url_for('admin_confirm_payments') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Konfirmasi</a>
+                <a href="{{ url_for('admin_history') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Histori</a>
+                <a href="{{ url_for('admin_users') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Kelola Pengguna</a>
+                <a href="{{ url_for('logout') }}" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mb-4 p-4 rounded-lg {{ 'bg-green-100 text-green-800' if category == 'success' else 'bg-red-100 text-red-800' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        // Toggle mobile menu
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

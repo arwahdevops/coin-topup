@@ -1,0 +1,44 @@
+{% extends "admin/base.html" %}
+{% block title %}Kelola Pengguna{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-lg shadow overflow-hidden">
+    <div class="p-6 bg-gray-50 border-b flex justify-between items-center">
+        <h1 class="text-xl font-bold">Daftar Pengguna</h1>
+    </div>
+    
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-3 text-left">Nama</th>
+                    <th class="px-4 py-3 text-left">No HP</th>
+                    <th class="px-4 py-3 text-left">Admin</th>
+                    <th class="px-4 py-3 text-left">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for user in users %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3">{{ user.name }}</td>
+                    <td class="px-4 py-3">{{ user.phone }}</td>
+                    <td class="px-4 py-3">
+                        {% if user.is_admin %}
+                        <span class="text-green-600">✓</span>
+                        {% else %}
+                        <span class="text-red-600">✗</span>
+                        {% endif %}
+                    </td>
+                    <td class="px-4 py-3">
+                        <a href="{{ url_for('edit_user', id=user.id) }}" 
+                           class="text-blue-600 hover:text-blue-800">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

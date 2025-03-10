@@ -493,7 +493,7 @@ def create_default_data():
                     jenis='ewallet',
                     provider='Gopay',
                     nama_akun='Riki Permana',
-                    nomor='081286233088'
+                    nomor='0810000000'
                 ),
                 PaymentMethod(
                     jenis='bank',
